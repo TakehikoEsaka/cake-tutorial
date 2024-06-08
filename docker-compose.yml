@@ -1,0 +1,41 @@
+# 参考サイト：https://qiita.com/mokomoko_brass/items/897f283fed11f717b056
+
+version: '3'
+services:
+  web:
+    # ./docker/web/Dockerfileでビルド
+    build:
+      dockerfile: Dockerfile
+    container_name: cake-web
+    # db起動後にwebを起動
+    depends_on:
+      - cake-db
+    # todo xdebugを使えるようにする
+    # environment:
+    #   XDEBUG_CONFIG: "client_host=host.docker.internal"
+    #   XDEBUG_MODE: "debug"
+    #   XDEBUG_TRIGGER: "1"
+    volumes:
+      # 開発コード
+      - ./:/var/www
+    # 80番ポートを割り当て
+    ports:
+      - ${WEB_PORT}:80
+
+  cake-db:
+    # mysql:8.0イメージから構築
+    image: mysql:8.0
+    # 認証プラグインをmysql_native_passwordに設定
+    command: --default-authentication-plugin=caching_sha2_password
+    # ローカルの./docker/mysql/my.cnfをコンテナの/etc/mysql/conf.d/my.cnfにマウント
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    # .envで環境変数を管理
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    # 80番ポートを割り当て
+    ports:
+      - ${DB_PORT}:3306

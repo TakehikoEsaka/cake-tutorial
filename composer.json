@@ -1,0 +1,30 @@
+{
+    "require": {
+        "php": "7.4",
+        "smarty/smarty": "^3.1",
+        "aws/aws-sdk-php": "^3.222",
+        "tecnickcom/tcpdf": "^6.4",
+        "setasign/fpdi": "^2.0",
+        "apache/log4php": "2.3.0",
+        "symfony/event-dispatcher": "^2.1.0",
+        "sentry/sdk": "^3.1",
+        "cakephp/cakephp": "~2.10.0",
+        "cakedc/search": "^2.5",
+        "datadog/dd-trace": "^0.80.0"
+    },
+    "config": {
+        "vendor-dir": "Vendor",
+        "platform": {
+            "php": "7.4"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "php-http/discovery": true
+        }
+    },
+    "require-dev": {
+        "cakephp/debug_kit": "^2.2.0",
+        "phpunit/phpunit": "~5.0",
+        "sizuhiko/fabricate": "~1.2.1"
+    }
+}
